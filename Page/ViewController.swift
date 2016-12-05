@@ -32,17 +32,17 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
         cPage = 1 // 現在のページ
         maxPage = 10 // 最大ページ１
         
-        self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.PageCurl, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+        self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.pageCurl, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
         
         // ビューコントローラーを設定、初期表示ページ
         let vc : ContentViewController = ContentViewController()
 //          ContentViewController(nibName : "ContentViewController", bundle : nil)
         print("created ContentViewController:\(cPage)ページ@viewDidLoad")
-        vc.view.backgroundColor = UIColor.whiteColor()
+        vc.view.backgroundColor = UIColor.white
         vc.label.text = "\(cPage)ページ"
         
         // ページを指定
-        self.pageViewController.setViewControllers([vc], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        self.pageViewController.setViewControllers([vc], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
         // 入れ子としてUiViewControllerを配置
         // コンテナビューコントローラーを追加
         self.addChildViewController(self.pageViewController)
@@ -54,9 +54,9 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
         self.pageViewController.view.frame = self.view.frame
         
         var pageViewRect : CGRect = self.view.bounds;
-        pageViewRect = CGRectInset(pageViewRect, 40.0, 40.0)
+        pageViewRect = pageViewRect.insetBy(dx: 40.0, dy: 40.0)
         self.pageViewController.view.frame = pageViewRect
-        self.pageViewController.didMoveToParentViewController(self)
+        self.pageViewController.didMove(toParentViewController: self)
         
 //        self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
         self.view.backgroundColor = UIColor(red: 0.941, green: 0.701, blue: 0.145, alpha: 1.0)
@@ -64,17 +64,17 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
   
     // 端末の向きが変わった際の処理
     // FIXME:
-    func pageViewController(pageViewController: UIPageViewController,
-        spineLocationForInterfaceOrientation orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation
+    func pageViewController(_ pageViewController: UIPageViewController,
+        spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation
     {
         // 縦方向の場合
         if (UIInterfaceOrientationIsPortrait(orientation)) {
             
             let currentViewController : UIViewController = self.pageViewController.viewControllers![0] 
-            self.pageViewController.setViewControllers([currentViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+            self.pageViewController.setViewControllers([currentViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
             // 立て向きの場合は、1ページを1画面で表示
-            self.pageViewController.doubleSided = false
-            return UIPageViewControllerSpineLocation.Min
+            self.pageViewController.isDoubleSided = false
+            return UIPageViewControllerSpineLocation.min
             
         }
         // 横方向の場合
@@ -101,43 +101,43 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
                 viewControllers = [previousViewController, currentViewController]
             }
             
-            self.pageViewController.setViewControllers(viewControllers as [UIViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
-        cPage++
+            self.pageViewController.setViewControllers(viewControllers as [UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
+        cPage += 1
             
             // 横向きの場合は、2ページを1画面で表示
-            self.pageViewController.doubleSided = true
-            return UIPageViewControllerSpineLocation.Mid
+            self.pageViewController.isDoubleSided = true
+            return UIPageViewControllerSpineLocation.mid
         }
     }
     
     // 次のページを指定
-    func pageViewController(pageViewController: UIPageViewController,
-        viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
 //      rewindFlag = true
         if (cPage == maxPage) {
             return nil;
         }
         // ページを加算してビューコントローラーを返却
-        cPage++
+        cPage += 1
         
         let vc : ContentViewController = ContentViewController()
       print("created ContentViewController:\(cPage)ページ@After")
 //      ContentViewController(nibName : "ContentViewController", bundle : nil)
-        vc.view.backgroundColor = UIColor.whiteColor()
+        vc.view.backgroundColor = UIColor.white
         vc.label.text = "\(cPage)ページ"
         return vc
     }
     
     // 前のページを指定
-    func pageViewController(pageViewController: UIPageViewController,
-        viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
       if(rewindFlag) {
-        cPage--; cPage--
+        cPage -= 1; cPage -= 1
         rewindFlag = !rewindFlag
       }else{
-          cPage--
+          cPage -= 1
       }
 //        if (cPage  == 2) {
 //          return nil
@@ -147,10 +147,10 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
         let vc : ContentViewController = ContentViewController()
       print("created ContentViewController:\(cPage)ページ@Before")
 //      ContentViewController(nibName : "ContentViewController", bundle : nil)
-        vc.view.backgroundColor = UIColor.whiteColor()
+        vc.view.backgroundColor = UIColor.white
         vc.label.text = "\(cPage)ページ"
       if(!rewindFlag) {
-        cPage++
+        cPage += 1
        rewindFlag = !rewindFlag
       }
         return vc
@@ -161,14 +161,14 @@ class ViewController: UIViewController, UIPageViewControllerDelegate, UIPageView
     // Dispose of any resources that can be recreated.
   }
   
-  func pageViewControllerSupportedInterfaceOrientations(pageViewController: UIPageViewController) -> UIInterfaceOrientationMask
+  func pageViewControllerSupportedInterfaceOrientations(_ pageViewController: UIPageViewController) -> UIInterfaceOrientationMask
   {
-    return UIInterfaceOrientationMask.All
+    return UIInterfaceOrientationMask.all
   }
-  func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+  func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
     print("->The page number will change.")
   }
-  func pageViewController(ProView: UIPageViewController,
+  func pageViewController(_ ProView: UIPageViewController,
     didFinishAnimating finished: Bool,
     previousViewControllers pageViewController: [UIViewController],
 //    previousViewControllers pageViewController: [AnyObject],
