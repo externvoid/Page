@@ -10,26 +10,28 @@ class ContentViewController: UIViewController {
     
     @IBOutlet var label: UILabel!
     var page : Int = 0
+  init(page: Int) {
+    super.init(nibName: "ContentViewController", bundle: nil)
+    self.page = page
+  }
   init() {
     print("->->init@Content")
     super.init(nibName: "ContentViewController", bundle: nil)
-    guard let _ = label else {
-      print("nil guard@Content")
+    guard let _ = label else { print("nil guard@Content")
 //      label = UILabel()
-      return //戻り値の無いメソッドでも⁉️
-    }
+      return }//戻り値の無いメソッドでも⁉️
   }
   override func viewWillLayoutSubviews(){
     print("viewWillLayoutSubviews@Content")
-//    print("\(page)ページ")
+    self.view.backgroundColor = UIColor.orange
+    print("\(page)ページ@viewWillLayout...\n")
   }
   override func viewDidLoad() {
-        super.viewDidLoad()
+    super.viewDidLoad()
     print("viewDidLoad@Content")
-
-        // Do any additional setup after loading the view.
-        label.text = "\(page)ページ"
-    }
+    label.text = "\(page)ページ"
+    print("page = \(page)@viewDidLoad\n")
+  }
 
   // not called, unreachable
   required init?(coder: NSCoder) {

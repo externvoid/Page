@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.cPage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.pageViewController(UIPageViewController, viewControllerBefore : UIViewController) -&gt; UIViewController?:ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cPage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.init(coder : NSCoder) -&gt; ViewController?:ViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

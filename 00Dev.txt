@@ -1,0 +1,3 @@
+ContentViewController#init add one more initializer.
+maked extention of ViewController comforming to UIPageViewControllerDelegate,
+UIPageViewControllerDataSource
